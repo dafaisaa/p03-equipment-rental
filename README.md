@@ -1,42 +1,17 @@
-# P03 — Flutter Fundamentals & Widget System
+# P03 – Equipment Rental
 
-> Pertemuan 3 • Sub-CPMK53.1 • Modul: [Flutter Fundamentals](https://classroom.fahrifirdaus.my.id/book/pemrograman-flutter/03-flutter-fundamentals)
+## Deskripsi Aplikasi
 
-Starter: daftar tugas + navigasi list → detail. StatelessWidget (`TaskCard`) vs StatefulWidget (`TaskListScreen`), passing data via constructor & `Navigator.push`/`pop`.
+Equipment Rental adalah aplikasi sederhana berbasis Flutter untuk menampilkan daftar peralatan yang dapat disewa. Aplikasi ini memiliki tiga halaman, yaitu halaman daftar equipment, halaman detail equipment, dan halaman form rental.
 
-## Cara mulai
+Pengguna dapat memilih equipment dari daftar, melihat informasi detail seperti nama, kategori, dan status, kemudian mengisi form penyewaan dengan nama dan email customer. Form memiliki validasi agar data tidak boleh kosong. Setelah form berhasil dikirim, status equipment akan berubah menjadi `rented`.
 
-```bash
-flutter create --platforms=android,ios,web .
-flutter pub get
-flutter run
-```
+Dalam aplikasi ini, saya menggunakan `ListView.builder` untuk menampilkan data equipment, custom widget `EquipmentCard` yang digunakan kembali pada daftar, serta `StatefulWidget` dan `setState` untuk memperbarui status equipment. Navigasi antarhalaman menggunakan `Navigator.push` dan `Navigator.pop`.
 
-## Checkpoints
+## Kendala dan Proses Debugging
 
-| # | Tugas | Validasi |
-|---|---|---|
-| 1 | Tambahkan `theme` di MaterialApp (lihat TODO di `main.dart`) | Warna app berubah |
-| 2 | Ganti ikon leading `TaskCard` jadi `IconButton` interaktif (TODO P03-2) | Tap ikon di list langsung toggle, tanpa buka detail |
-| 3 | Pahami alur `push`/`pop` di `_openDetail`: ubah `TaskDetailScreen` agar `pop` tanpa nilai (`Navigator.pop(context)`) | Setelah itu toggle dari detail tidak berefek — jelaskan kenapa |
-| 4 | Error-First (di README ini, bagian bawah): perbaiki snippet overflow | Kode milikmu sendiri, tanpa overflow |
+Kendala yang sempat membuat saya kesulitan adalah aplikasi gagal dijalankan pada perangkat Android saat proses build Flutter. Awalnya, saya menduga masalah berasal dari konfigurasi Gradle. Namun, setelah membaca pesan error pada terminal, saya menemukan pesan `There is not enough space on the disk`.
 
-## Latihan Error-First (P03-4)
+Untuk memastikan penyebabnya, saya memeriksa kapasitas penyimpanan drive C: melalui File Explorer dan ternyata ruang kosong hanya tersisa sekitar 1,5 GB. Saya kemudian membersihkan file sementara Windows untuk menambah ruang penyimpanan. Setelah itu, saya menjalankan kembali aplikasi menggunakan perintah `flutter run` dan aplikasi berhasil dijalankan di Samsung A51.
 
-Snippet berikut sengaja rusak — overflow saat keyboard/layar kecil. Perbaiki dengan `Expanded`/`Flexible`:
-
-```dart
-// BUG: RenderFlex overflowed
-Row(
-  children: [
-    Text('Status: '),
-    Text('Belum selesai — panjang sekali sampai keluar layar'),
-    Icon(Icons.info),
-  ],
-)
-```
-
-## Catatan
-
-- Aturan praktis: mulai dengan StatelessWidget; naik ke StatefulWidget hanya saat ada state lokal yang berubah.
-- `setState` memberi tahu Flutter "build ulang widget ini" — bandingkan dengan P11 (Provider) nanti.
+Dari pengalaman tersebut, saya belajar bahwa proses debugging tidak hanya dilakukan dengan memeriksa kode program, tetapi juga dengan membaca pesan error dan memeriksa lingkungan pengembangan.
